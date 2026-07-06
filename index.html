@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="ja" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>合同会社TNG | TNG Co., Ltd.</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            bg: '#FFFFFF',
+                            bgAlt: '#FCFAF8',   // ロゴに調和する温かみのあるアラバスターホワイト
+                            text: '#1C1A1A',    // 上品で深みのある墨色
+                            muted: '#5A5655',   // シックなアッシュグレー
+                            border: '#EAE5E0',  // 柔らかなベージュ調の境界線
+                            gold: '#C5A880',    // 優雅なシャンパンゴールド
+                            goldDark: '#9A7B56'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Noto+Serif+JP:wght@200;300;400;500;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            background-color: #FFFFFF;
+            color: #1C1A1A;
+        }
+        .font-serif-elegant {
+            font-family: 'Playfair Display', 'Noto Serif JP', serif;
+        }
+        .glass-header {
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+        }
+        /* 極細の優美なホバーアンダーライン */
+        .nav-link {
+            position: relative;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            transform: scaleX(0);
+            height: 1px;
+            bottom: -4px;
+            left: 0;
+            background-color: #C5A880;
+            transform-origin: bottom right;
+            transition: transform 0.35s ease-out;
+        }
+        .nav-link:hover::after {
+            transform: scaleX(1);
+            transform-origin: bottom left;
+        }
+    </style>
+</head>
+<body class="antialiased overflow-x-hidden selection:bg-brand-border selection:text-brand-text">
+
+    <!-- ナビゲーションバー -->
+    <header class="fixed top-0 left-0 w-full z-50 glass-header border-b border-brand-border transition-all duration-300">
+        <div class="max-w-5xl mx-auto px-6 h-20 flex items-center justify-between">
+            <!-- ロゴエリア -->
+            <a href="#" class="flex items-center space-x-2.5 group" aria-label="合同会社TNG ホームへ">
+                <svg viewBox="0 0 200 85" class="h-9 w-auto text-brand-text transition-transform duration-500 group-hover:scale-[1.03]" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="gold-grad-header" x1="0" y1="0" x2="1" y2="1">
+                            <stop offset="0%" stop-color="#C5A880"/>
+                            <stop offset="100%" stop-color="#9A7B56"/>
+                        </linearGradient>
+                    </defs>
+                    <text x="25" y="62" font-size="52" font-family="'Playfair Display', Georgia, serif" fill="#1C1A1A" font-weight="400">T</text>
+                    <text x="68" y="62" font-size="52" font-family="'Playfair Display', Georgia, serif" fill="#1C1A1A" font-weight="400">N</text>
+                    <text x="114" y="62" font-size="52" font-family="'Playfair Display', Georgia, serif" fill="url(#gold-grad-header)" font-weight="400">G</text>
+                    <path d="M 21 62 Q 82 41 152 32 Q 82 44 21 62" fill="url(#gold-grad-header)" />
+                </svg>
+                <div class="flex flex-col border-l border-brand-border pl-3">
+                    <span class="text-sm font-medium tracking-[0.2em] text-brand-text">合同会社TNG</span>
+                    <span class="text-[7.5px] text-brand-muted tracking-[0.25em] uppercase font-light">TNG AXIS CO.</span>
+                </div>
+            </a>
+
+            <!-- デスクトップメニュー -->
+            <nav class="hidden md:flex items-center space-x-10">
+                <a href="#about" class="nav-link text-[11px] tracking-[0.25em] text-brand-muted hover:text-brand-text transition-colors uppercase font-medium">Concept</a>
+                <a href="#services" class="nav-link text-[11px] tracking-[0.25em] text-brand-muted hover:text-brand-text transition-colors uppercase font-medium">Services</a>
+                <a href="#company" class="nav-link text-[11px] tracking-[0.25em] text-brand-muted hover:text-brand-text transition-colors uppercase font-medium">Company</a>
+                <a href="#contact" class="px-5 py-2 border border-brand-text text-[10px] tracking-[0.25em] hover:bg-brand-text hover:text-white transition-all duration-300 font-medium">CONTACT</a>
+            </nav>
+
+            <!-- モバイルメニューボタン -->
+            <button id="mobile-menu-btn" class="md:hidden p-2 text-brand-text hover:opacity-70 focus:outline-none" aria-label="メニューを開く">
+                <i data-lucide="menu" class="w-5 h-5"></i>
+            </button>
+        </div>
+
+        <!-- モバイルドロワー -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-b border-brand-border transition-all duration-300">
+            <div class="px-6 pt-4 pb-8 space-y-4">
+                <a href="#about" class="block py-2 text-xs tracking-widest text-brand-muted hover:text-brand-text transition-colors">Concept / コンセプト</a>
+                <a href="#services" class="block py-2 text-xs tracking-widest text-brand-muted hover:text-brand-text transition-colors">Services / 事業内容</a>
+                <a href="#company" class="block py-2 text-xs tracking-widest text-brand-muted hover:text-brand-text transition-colors">Company / 会社概要</a>
+                <a href="#contact" class="block w-full text-center py-3 border border-brand-text text-xs tracking-widest font-medium text-brand-text hover:bg-brand-text hover:text-white transition-all">CONTACT / お問い合わせ</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- ヒーローセクション -->
+    <section class="relative min-h-screen flex items-center justify-center bg-white px-6">
+        <div class="max-w-4xl mx-auto text-center flex flex-col items-center pt-24">
+            
+            <!-- 公式ロゴマーク SVG -->
+            <div class="mb-12">
+                <div class="p-6">
+                    <svg viewBox="0 0 240 140" class="w-56 sm:w-64 h-auto mx-auto" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <linearGradient id="gold-grad-hero" x1="0" y1="0" x2="1" y2="1">
+                                <stop offset="0%" stop-color="#C5A880"/>
+                                <stop offset="50%" stop-color="#D9C3A5"/>
+                                <stop offset="100%" stop-color="#9A7B56"/>
+                            </linearGradient>
+                        </defs>
+                        <text x="32" y="76" font-size="68" font-family="'Playfair Display', Georgia, serif" fill="#1C1A1A" font-weight="400">T</text>
+                        <text x="82" y="76" font-size="68" font-family="'Playfair Display', Georgia, serif" fill="#1C1A1A" font-weight="400">N</text>
+                        <text x="138" y="76" font-size="68" font-family="'Playfair Display', Georgia, serif" fill="url(#gold-grad-hero)" font-weight="400">G</text>
+                        <path d="M 27 76 Q 107 48 188 35 Q 107 53 27 76" fill="url(#gold-grad-hero)" />
+                        <text x="110" y="118" font-size="11.5" font-family="'Noto Serif JP', 'Georgia', serif" fill="#1C1A1A" letter-spacing="5" text-anchor="middle">― 合同会社TNG ―</text>
+                    </svg>
+                </div>
+            </div>
+
+            <!-- キャッチコピー -->
+            <h1 class="text-2xl sm:text-4xl font-light tracking-[0.2em] text-brand-text leading-relaxed sm:leading-loose mb-8">
+                ビジネスの可能性を広げ、<br>
+                <span class="font-normal border-b border-brand-gold pb-1 sm:pb-2">確かな未来を共創する。</span>
+            </h1>
+
+            <p class="max-w-2xl text-xs sm:text-sm text-brand-muted mb-12 leading-loose font-light tracking-wide">
+                合同会社TNGは、資産管理、人材紹介、EC開発、不動産仲介など多様な領域を結ぶ「軸（AXIS）」として、お客様の事業の永続的な成長に静かに伴走する総合パートナーです。
+            </p>
+
+            <!-- アクションボタン -->
+            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center w-full max-w-xs mb-16">
+                <a href="#services" class="w-full px-8 py-3.5 bg-brand-text text-white hover:bg-brand-gold hover:text-brand-text text-[11px] tracking-widest font-medium transition-all duration-300 text-center shadow-sm">
+                    SERVICES / 事業内容
+                </a>
+                <a href="#company" class="w-full px-8 py-3.5 border border-brand-border hover:border-brand-text text-brand-muted hover:text-brand-text text-[11px] tracking-widest font-medium transition-all duration-300 text-center">
+                    COMPANY / 会社概要
+                </a>
+            </div>
+
+            <!-- 静かなスクロール指示 -->
+            <div class="flex flex-col items-center opacity-40 animate-pulse">
+                <span class="text-[9px] tracking-widest uppercase text-brand-muted mb-2 font-light">Scroll</span>
+                <div class="w-px h-8 bg-brand-gold"></div>
+            </div>
+            
+        </div>
+    </section>
+
+    <!-- コンセプト -->
+    <section id="about" class="py-32 bg-brand-bgAlt border-t border-brand-border">
+        <div class="max-w-4xl mx-auto px-6">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                
+                <div>
+                    <div class="inline-flex items-center space-x-2 text-brand-muted mb-6">
+                        <span class="text-xs font-semibold tracking-widest uppercase">01 / Concept</span>
+                    </div>
+                    <h2 class="text-xl sm:text-2xl font-light tracking-widest text-brand-text mb-8 leading-relaxed">
+                        多角的なアプローチで、<br>最適な社会の調和を。
+                    </h2>
+                    <p class="text-xs sm:text-sm text-brand-muted mb-6 leading-loose font-light">
+                        変化の激しい現代社会において、一方向からの視点だけでは最適な解決策は見出せません。私たちはコンサルティング、人材、デジタル技術を繋ぐ「軸」として機能し、確実で効率の良いプロセスをご提供いたします。
+                    </p>
+                    <p class="text-xs sm:text-sm text-brand-muted leading-loose font-light">
+                        常に誠実でオープンな姿勢を貫き、確かな信頼に基づいたパートナーシップを築いてまいります。
+                    </p>
+                </div>
+
+                <!-- 3つの行動指針 -->
+                <div class="bg-white border border-brand-border p-8 rounded-sm shadow-sm">
+                    <h3 class="text-xs font-semibold tracking-widest text-brand-text mb-8 uppercase">
+                        Action Principles / 行動指針
+                    </h3>
+                    <div class="space-y-6">
+                        <div class="border-l-2 border-brand-gold pl-4">
+                            <h4 class="text-xs font-medium text-brand-text mb-1">Integrity（誠実さ）</h4>
+                            <p class="text-[11px] text-brand-muted leading-relaxed font-light">いかなる局面においても、法令を遵守し誠実な行動を徹底します。</p>
+                        </div>
+                        <div class="border-l-2 border-brand-gold pl-4">
+                            <h4 class="text-xs font-medium text-brand-text mb-1">Axis（調和の軸）</h4>
+                            <p class="text-[11px] text-brand-muted leading-relaxed font-light">関係するすべてのステークホルダーの価値を調和させます。</p>
+                        </div>
+                        <div class="border-l-2 border-brand-gold pl-4">
+                            <h4 class="text-xs font-medium text-brand-text mb-1">Quality（品質の追求）</h4>
+                            <p class="text-[11px] text-brand-muted leading-relaxed font-light">変化に素早く迅速に対応し、かつ高水準のアウトプットを徹底します。</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- 事業内容 -->
+    <section id="services" class="py-32 bg-white">
+        <div class="max-w-4xl mx-auto px-6">
+            <div class="text-center max-w-2xl mx-auto mb-20">
+                <span class="text-xs font-semibold tracking-widest text-brand-muted uppercase block mb-4">02 / Our Services</span>
+                <h2 class="text-xl sm:text-2xl font-light tracking-widest text-brand-text">事業内容</h2>
+                <div class="w-8 h-px bg-brand-gold mx-auto mt-6"></div>
+            </div>
+
+            <!-- グリッド境界 -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-brand-border border border-brand-border">
+                
+                <!-- サービス 1 -->
+                <div class="bg-white p-8 hover:bg-brand-bgAlt transition-all duration-500 flex flex-col justify-between min-h-[250px] group">
+                    <div>
+                        <div class="text-brand-gold mb-6 transition-transform duration-500 group-hover:scale-110">
+                            <i data-lucide="trending-up" class="w-5 h-5 stroke-[1.25]"></i>
+                        </div>
+                        <h3 class="text-sm font-medium text-brand-text mb-3">資産運用コンサルティング</h3>
+                        <p class="text-xs text-brand-muted leading-relaxed font-light">
+                            資産ポートフォリオを分析し、中長期的に安定した収益を実現するためのコンサルティングを行います。
+                        </p>
+                    </div>
+                    <div class="text-[9px] tracking-widest text-slate-400 mt-6 uppercase">Consulting</div>
+                </div>
+
+                <!-- サービス 2：準備中 -->
+                <div class="bg-white p-8 hover:bg-brand-bgAlt transition-all duration-500 flex flex-col justify-between min-h-[250px] group">
+                    <div>
+                        <div class="text-brand-gold mb-6 flex items-center justify-between transition-transform duration-500 group-hover:scale-105">
+                            <i data-lucide="users" class="w-5 h-5 stroke-[1.25]"></i>
+                            <span class="text-[8px] border border-brand-gold text-brand-goldDark px-2 py-0.5 rounded-sm font-medium tracking-widest">準備中</span>
+                        </div>
+                        <h3 class="text-sm font-medium text-brand-text mb-3">有料職業紹介・労働者派遣</h3>
+                        <p class="text-xs text-brand-muted leading-relaxed font-light">
+                            求職者と企業を繋ぐ最適な人材マッチングソリューションのご提供に向けて、現在、各種許認可・ライセンスの取得準備を進めております。
+                        </p>
+                    </div>
+                    <div class="text-[9px] tracking-widest text-slate-400 mt-6 uppercase">HR Solutions (Preparation)</div>
+                </div>
+
+                <!-- サービス 3 -->
+                <div class="bg-white p-8 hover:bg-brand-bgAlt transition-all duration-500 flex flex-col justify-between min-h-[250px] group">
+                    <div>
+                        <div class="text-brand-gold mb-6 transition-transform duration-500 group-hover:scale-110">
+                            <i data-lucide="shopping-cart" class="w-5 h-5 stroke-[1.25]"></i>
+                        </div>
+                        <h3 class="text-sm font-medium text-brand-text mb-3">EC・Webマネジメント</h3>
+                        <p class="text-xs text-brand-muted leading-relaxed font-light">
+                            各種ECサイトやコーポレートサイトの企画、構築、安全な運営管理体制の維持までをカバー。
+                        </p>
+                    </div>
+                    <div class="text-[9px] tracking-widest text-slate-400 mt-6 uppercase">Digital Media</div>
+                </div>
+
+                <!-- サービス 4 -->
+                <div class="bg-white p-8 hover:bg-brand-bgAlt transition-all duration-500 flex flex-col justify-between min-h-[250px] group">
+                    <div>
+                        <div class="text-brand-gold mb-6 transition-transform duration-500 group-hover:scale-110">
+                            <i data-lucide="package" class="w-5 h-5 stroke-[1.25]"></i>
+                        </div>
+                        <h3 class="text-sm font-medium text-brand-text mb-3">プロダクト企画・製作</h3>
+                        <p class="text-xs text-brand-muted leading-relaxed font-light">
+                            衣料品、日用雑貨、鞄、時計など各種商品のスマートな企画、製造プロセスの管理、販売活動を行います。
+                        </p>
+                    </div>
+                    <div class="text-[9px] tracking-widest text-slate-400 mt-6 uppercase">Product Design</div>
+                </div>
+
+                <!-- サービス 5 -->
+                <div class="bg-white p-8 hover:bg-brand-bgAlt transition-all duration-500 flex flex-col justify-between min-h-[250px] group">
+                    <div>
+                        <div class="text-brand-gold mb-6 transition-transform duration-500 group-hover:scale-110">
+                            <i data-lucide="calendar" class="w-5 h-5 stroke-[1.25]"></i>
+                        </div>
+                        <h3 class="text-sm font-medium text-brand-text mb-3">イベント企画・運営</h3>
+                        <p class="text-xs text-brand-muted leading-relaxed font-light">
+                            プロモーション、ネットワーキングなどの各種催事における計画立案から当日のスムーズな運営代行まで。
+                        </p>
+                    </div>
+                    <div class="text-[9px] tracking-widest text-slate-400 mt-6 uppercase">Event Operation</div>
+                </div>
+
+                <!-- サービス 6：準備中 -->
+                <div class="bg-white p-8 hover:bg-brand-bgAlt transition-all duration-500 flex flex-col justify-between min-h-[250px] group">
+                    <div>
+                        <div class="text-brand-gold mb-6 flex items-center justify-between transition-transform duration-500 group-hover:scale-105">
+                            <i data-lucide="home" class="w-5 h-5 stroke-[1.25]"></i>
+                            <span class="text-[8px] border border-brand-gold text-brand-goldDark px-2 py-0.5 rounded-sm font-medium tracking-widest">準備中</span>
+                        </div>
+                        <h3 class="text-sm font-medium text-brand-text mb-3">不動産コンサルティング・仲介</h3>
+                        <p class="text-xs text-brand-muted leading-relaxed font-light">
+                            安全で透明性の高い不動産取引を実現する賃貸・売買仲介サービス。現在、宅地建物取引業免許の取得準備を進めております。
+                        </p>
+                    </div>
+                    <div class="text-[9px] tracking-widest text-slate-400 mt-6 uppercase">Real Estate (Preparation)</div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- 会社概要 -->
+    <section id="company" class="py-32 bg-brand-bgAlt border-t border-b border-brand-border">
+        <div class="max-w-4xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <span class="text-xs font-semibold tracking-widest text-brand-muted uppercase block mb-4">03 / Company Profile</span>
+                <h2 class="text-xl sm:text-2xl font-light tracking-widest text-brand-text">会社概要</h2>
+                <div class="w-8 h-px bg-brand-gold mx-auto mt-6"></div>
+            </div>
+
+            <div class="bg-white border border-brand-border rounded-sm overflow-hidden shadow-sm">
+                <div class="divide-y divide-brand-border">
+                    <div class="grid grid-cols-1 md:grid-cols-3 p-6 gap-2 md:gap-6 hover:bg-slate-50/50 transition-colors">
+                        <div class="text-xs tracking-widest text-brand-muted font-medium uppercase">商号</div>
+                        <div class="md:col-span-2 text-sm text-brand-text font-medium">合同会社TNG</div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-3 p-6 gap-2 md:gap-6 hover:bg-slate-50/50 transition-colors">
+                        <div class="text-xs tracking-widest text-brand-muted font-medium uppercase">会社法人等番号</div>
+                        <div class="md:col-span-2 text-sm text-brand-text flex items-center justify-between font-mono">
+                            <span>1200-03-025184</span>
+                            <button onclick="copyToClipboard('1200-03-025184')" class="text-xs text-brand-gold hover:text-brand-goldDark hover:underline transition-all flex items-center gap-1 font-sans">
+                                <i data-lucide="copy" class="w-3 h-3"></i> コピー
+                            </button>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-3 p-6 gap-2 md:gap-6 hover:bg-slate-50/50 transition-colors">
+                        <div class="text-xs tracking-widest text-brand-muted font-medium uppercase">設立</div>
+                        <div class="md:col-span-2 text-sm text-brand-text">令和5年（2023年）10月17日</div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-3 p-6 gap-2 md:gap-6 hover:bg-slate-50/50 transition-colors">
+                        <div class="text-xs tracking-widest text-brand-muted font-medium uppercase">代表社員</div>
+                        <div class="md:col-span-2 text-sm text-brand-text font-medium">中原 聖人</div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-3 p-6 gap-2 md:gap-6 hover:bg-slate-50/50 transition-colors">
+                        <div class="text-xs tracking-widest text-brand-muted font-medium uppercase">本店所在地</div>
+                        <div class="md:col-span-2 text-sm text-brand-text leading-relaxed font-light">
+                            〒551-0002 大阪府大阪市大正区泉尾四丁目15-4
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-3 p-6 gap-2 md:gap-6 hover:bg-slate-50/50 transition-colors">
+                        <div class="text-xs tracking-widest text-brand-muted font-medium uppercase">メールアドレス</div>
+                        <div class="md:col-span-2 text-sm text-brand-text font-mono">
+                            <a href="mailto:nakahara666takahito@gmail.com" class="hover:text-brand-gold hover:underline transition-colors">nakahara666takahito@gmail.com</a>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-3 p-6 gap-2 md:gap-6 hover:bg-slate-50/50 transition-colors">
+                        <div class="text-xs tracking-widest text-brand-muted font-medium uppercase">公告方法</div>
+                        <div class="md:col-span-2 text-sm text-brand-muted font-light">官報に掲載して行う</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- お問い合わせ -->
+    <section id="contact" class="py-32 bg-white">
+        <div class="max-w-3xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <span class="text-xs font-semibold tracking-widest text-brand-muted uppercase block mb-4">04 / Contact</span>
+                <h2 class="text-xl sm:text-2xl font-light tracking-widest text-brand-text">お問い合わせ</h2>
+                <div class="w-8 h-px bg-brand-gold mx-auto mt-6"></div>
+                <p class="text-xs text-brand-muted mt-6 font-light leading-relaxed">
+                    事業に関するお見積もり、業務提携などのご相談は以下よりご連絡ください。<br>
+                    直接メールにてご連絡いただく場合は、<a href="mailto:nakahara666takahito@gmail.com" class="text-brand-gold hover:underline font-mono font-medium">nakahara666takahito@gmail.com</a> までお寄せください。
+                </p>
+            </div>
+
+            <!-- お問合せフォーム -->
+            <div class="bg-white border border-brand-border p-8 sm:p-10 rounded-sm shadow-sm">
+                <form id="contact-form" onsubmit="handleContactSubmit(event)" class="space-y-6">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <div>
+                            <label for="client-name" class="block text-xs font-medium tracking-widest text-brand-text mb-2">お名前・社名 <span class="text-red-500">*</span></label>
+                            <input type="text" id="client-name" required class="w-full bg-slate-50 border border-slate-200 rounded-sm px-4 py-3 text-sm text-brand-text focus:outline-none focus:ring-1 focus:ring-brand-gold focus:border-brand-gold focus:bg-white transition-all duration-300" placeholder="例) 合同会社TNG 中原">
+                        </div>
+                        <div>
+                            <label for="client-email" class="block text-xs font-medium tracking-widest text-brand-text mb-2">メールアドレス <span class="text-red-500">*</span></label>
+                            <input type="email" id="client-email" required class="w-full bg-slate-50 border border-slate-200 rounded-sm px-4 py-3 text-sm text-brand-text focus:outline-none focus:ring-1 focus:ring-brand-gold focus:border-brand-gold focus:bg-white transition-all duration-300" placeholder="例) nakahara666takahito@gmail.com">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="subject" class="block text-xs font-medium tracking-widest text-brand-text mb-2">件名 <span class="text-red-500">*</span></label>
+                        <select id="subject" class="w-full bg-slate-50 border border-slate-200 rounded-sm px-4 py-3 text-sm text-brand-text focus:outline-none focus:ring-1 focus:ring-brand-gold focus:border-brand-gold focus:bg-white transition-all duration-300">
+                            <option value="コンサルティングのご相談">コンサルティングに関するご相談</option>
+                            <option value="人材紹介・派遣のご相談">人材紹介・派遣に関するご相談</option>
+                            <option value="EC・Web制作のご相談">EC・Webサイト構築・運用のご依頼</option>
+                            <option value="その他">その他のお問い合わせ</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label for="message" class="block text-xs font-medium tracking-widest text-brand-text mb-2">お問い合わせ内容 <span class="text-red-500">*</span></label>
+                        <textarea id="message" rows="6" required class="w-full bg-slate-50 border border-slate-200 rounded-sm px-4 py-3 text-sm text-brand-text focus:outline-none focus:ring-1 focus:ring-brand-gold focus:border-brand-gold focus:bg-white transition-all duration-300" placeholder="具体的なご相談内容をご記入ください。"></textarea>
+                    </div>
+
+                    <div class="flex items-center space-x-3 py-1">
+                        <input type="checkbox" id="privacy-policy" required class="w-4 h-4 rounded border-slate-300 text-brand-gold focus:ring-brand-gold">
+                        <label for="privacy-policy" class="text-xs text-brand-muted font-light">プライバシーポリシーに同意します。</label>
+                    </div>
+
+                    <button type="submit" class="w-full py-4 bg-brand-text hover:bg-brand-gold hover:text-brand-text text-white text-xs tracking-widest font-semibold transition-all duration-300 active:translate-y-px shadow-sm">
+                        上記内容で送信する
+                    </button>
+                </form>
+
+                <!-- 送信完了メッセージ -->
+                <div id="success-overlay" class="hidden text-center py-12">
+                    <div class="w-12 h-12 bg-slate-50 border border-slate-200 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i data-lucide="check" class="w-6 h-6 text-brand-gold"></i>
+                    </div>
+                    <h3 class="text-lg font-medium text-brand-text mb-2">送信が完了しました</h3>
+                    <p class="text-xs text-brand-muted max-w-sm mx-auto mb-8 font-light">お問い合わせありがとうございます。内容を確認の上、担当者より折り返しご連絡いたします。</p>
+                    <button onclick="resetContactForm()" class="px-6 py-2 border border-slate-300 text-xs tracking-widest text-brand-muted hover:text-brand-text transition-all duration-300">
+                        新しいメッセージを作成する
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- コピー完了通知トースト -->
+    <div id="toast" class="fixed bottom-6 right-6 bg-white border border-brand-border text-brand-text px-5 py-3 rounded-sm shadow-md flex items-center space-x-3 transform translate-y-24 opacity-0 transition-all duration-300 z-50">
+        <i data-lucide="check" class="w-4 h-4 text-brand-gold"></i>
+        <span class="text-xs tracking-wider" id="toast-message">コピーしました</span>
+    </div>
+
+    <!-- フッター -->
+    <footer class="bg-white border-t border-brand-border py-16 text-brand-muted text-xs">
+        <div class="max-w-5xl mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-center space-y-6 md:space-y-0">
+                <div class="flex items-center space-x-3">
+                    <div class="w-12 h-auto">
+                        <svg viewBox="0 0 200 85" class="w-full h-auto text-brand-text" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <text x="25" y="62" font-size="52" font-family="'Playfair Display', Georgia, serif" fill="#1C1A1A" font-weight="400">T</text>
+                            <text x="68" y="62" font-size="52" font-family="'Playfair Display', Georgia, serif" fill="#1C1A1A" font-weight="400">N</text>
+                            <text x="114" y="62" font-size="52" font-family="'Playfair Display', Georgia, serif" fill="url(#gold-grad-header)" font-weight="400">G</text>
+                            <path d="M 21 62 Q 82 41 152 32 Q 82 44 21 62" fill="url(#gold-grad-header)" />
+                        </svg>
+                    </div>
+                    <div class="border-l border-brand-border pl-3">
+                        <span class="font-medium text-brand-text tracking-widest">合同会社TNG</span>
+                        <p class="text-[8px] text-slate-400 tracking-[0.2em] uppercase">TNG AXIS CO., LTD.</p>
+                    </div>
+                </div>
+                
+                <div class="flex space-x-8 text-[10px] tracking-widest font-medium uppercase">
+                    <a href="#about" class="hover:text-brand-gold transition-colors">Concept</a>
+                    <a href="#services" class="hover:text-brand-gold transition-colors">Services</a>
+                    <a href="#company" class="hover:text-brand-gold transition-colors">Company</a>
+                    <a href="#contact" class="hover:text-brand-gold transition-colors">Contact</a>
+                </div>
+
+                <p class="text-[10px] text-slate-400 font-light">&copy; 2026 合同会社TNG.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- スクリプト制御 -->
+    <script>
+        lucide.createIcons();
+
+        const menuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        menuBtn.addEventListener('click', () => {
+            const isHidden = mobileMenu.classList.contains('hidden');
+            if (isHidden) {
+                mobileMenu.classList.remove('hidden');
+                menuBtn.innerHTML = '<i data-lucide="x" class="w-5 h-5"></i>';
+            } else {
+                mobileMenu.classList.add('hidden');
+                menuBtn.innerHTML = '<i data-lucide="menu" class="w-5 h-5"></i>';
+            }
+            lucide.createIcons();
+        });
+
+        const mobileLinks = mobileMenu.querySelectorAll('a');
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+                menuBtn.innerHTML = '<i data-lucide="menu" class="w-5 h-5"></i>';
+                lucide.createIcons();
+            });
+        });
+
+        function copyToClipboard(text) {
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(text).then(() => {
+                    showToast("法人番号をコピーしました");
+                }).catch(() => {
+                    fallbackCopy(text);
+                });
+            } else {
+                fallbackCopy(text);
+            }
+        }
+
+        function fallbackCopy(text) {
+            const input = document.createElement('input');
+            input.value = text;
+            document.body.appendChild(input);
+            input.select();
+            document.execCommand('copy');
+            document.body.removeChild(input);
+            showToast("法人番号をコピーしました");
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            const toastMsg = document.getElementById('toast-message');
+            toastMsg.textContent = message;
+            
+            toast.classList.remove('translate-y-24', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
+
+            setTimeout(() => {
+                toast.classList.remove('translate-y-0', 'opacity-100');
+                toast.classList.add('translate-y-24', 'opacity-0');
+            }, 3000);
+        }
+
+        function handleContactSubmit(event) {
+            event.preventDefault();
+            document.getElementById('contact-form').classList.add('hidden');
+            document.getElementById('success-overlay').classList.remove('hidden');
+            lucide.createIcons();
+        }
+
+        function resetContactForm() {
+            document.getElementById('contact-form').reset();
+            document.getElementById('contact-form').classList.remove('hidden');
+            document.getElementById('success-overlay').classList.add('hidden');
+        }
+    </script>
+</body>
+</html>
